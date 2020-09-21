@@ -32,7 +32,7 @@ services:
         image: hypriot/rpi-busybox-httpd
         container_name: rpi-busybox-httpd
         ports:
-            - 80:80
+            - 3000:80
 
 volumes:
     letsencrypt:
