@@ -26,5 +26,13 @@ services:
         volumes:
             - ./nginx-certbot/conf.d:/etc/nginx/user.conf.d:ro
             - letsencrypt:/etc/letsencrypt
+
+    rpi-busybox-httpd:
+        restart: unless-stopped
+        image: hypriot/rpi-busybox-httpd
+        container_name: rpi-busybox-httpd
+        ports:
+            - 80:80
+
 volumes:
     letsencrypt:
