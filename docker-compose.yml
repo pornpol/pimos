@@ -1,4 +1,4 @@
-version: "3"
+version: "3.8"
 services:
     ddclient:
         restart: unless-stopped
@@ -18,5 +18,24 @@ services:
         ports:
             - 3000:80
 
-volumes:
-    letsencrypt:
+    nginx:
+        image: nginx:latest
+        restart: always
+        container_name: nginx
+        volumes:
+            - ./nginx/public:/var/www/html
+            - ./nginx/conf.d:/etc/nginx/conf.d
+            - ./nginx/certbot/conf:/etc/nginx/ssl
+            - ./nginx/certbot/data:/var/www/certbot
+        ports:
+            - 80:80
+            - 443:443
+
+    certbot:
+        image: certbot/certbot:latest
+        container_name: certbot
+        command: certonly --webroot --webroot-path=/var/www/certbot --email pornpol.w@gmail.com --agree-tos --no-eff-email -d pornpol.dev -d www.pornpol.dev
+        volumes:
+            - ./nginx/certbot/conf:/etc/letsencrypt
+            - ./nginx/certbot/logs:/var/log/letsencrypt
+            - ./nginx/certbot/data:/var/www/certbot
