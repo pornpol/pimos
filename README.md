@@ -13,7 +13,7 @@
 
 1. Update config file
 
-    - ddclient / ddclient/config/ddclient.conf
+    - ddclient -> /ddclient/config/ddclient.conf
 
     ```conf
     # /ddclient/config/ddclient.conf
