@@ -1,12 +1,30 @@
 version: "3"
 services:
-  ddclient:
-    image: linuxserver/ddclient
-    container_name: ddclient
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Asia/Bangkok
-    volumes:
-      - ./ddclient/config:/config
-    restart: unless-stopped
+    ddclient:
+        restart: unless-stopped
+        image: linuxserver/ddclient
+        container_name: ddclient
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Bangkok
+        volumes:
+            - ./ddclient/config:/config
+
+    nginx-certbot:
+        restart: unless-stopped
+        image: staticfloat/nginx-certbot
+        container_name: nginx-certbot
+        ports:
+            - 80:80/tcp
+            - 443:443/tcp
+        environment:
+            CERTBOT_EMAIL: pornpol.w@gmail.com
+            # variable names are space-separated
+            ENVSUBST_VARS: FQDN
+            FQDN: pornpol.dev
+        volumes:
+            - .nginx-certbot/conf.d:/etc/nginx/user.conf.d:ro
+            - letsencrypt:/etc/letsencrypt
+volumes:
+    letsencrypt:
