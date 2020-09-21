@@ -24,7 +24,7 @@ services:
             ENVSUBST_VARS: FQDN
             FQDN: pornpol.dev
         volumes:
-            - .nginx-certbot/conf.d:/etc/nginx/user.conf.d:ro
+            - ./nginx-certbot/conf.d:/etc/nginx/user.conf.d:ro
             - letsencrypt:/etc/letsencrypt
 volumes:
     letsencrypt:
