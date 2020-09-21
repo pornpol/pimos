@@ -11,24 +11,6 @@ services:
         volumes:
             - ./ddclient/config:/config
 
-    nginx-certbot:
-        restart: unless-stopped
-        image: staticfloat/nginx-certbot
-        container_name: nginx-certbot
-        ports:
-            - 80:80/tcp
-            - 443:443/tcp
-        depends_on:
-            - "ddclient"
-        environment:
-            CERTBOT_EMAIL: pornpol.w@gmail.com
-            # variable names are space-separated
-            ENVSUBST_VARS: FQDN
-            FQDN: pornpol.dev
-        volumes:
-            - ./nginx-certbot/conf.d:/etc/nginx/user.conf.d:ro
-            - letsencrypt:/etc/letsencrypt
-
     rpi-busybox-httpd:
         restart: unless-stopped
         image: hypriot/rpi-busybox-httpd
