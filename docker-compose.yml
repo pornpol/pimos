@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     rpi-busybox-httpd:
-        restart: alway
+        restart: always
         image: hypriot/rpi-busybox-httpd
         container_name: rpi-busybox-httpd
         ports:
@@ -22,7 +22,7 @@ services:
     node-red:
         image: nodered/node-red:latest
         container_name: node-red
-        restart: alway
+        restart: always
         environment:
             - TZ=Asia/Bangkok
         ports:
