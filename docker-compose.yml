@@ -1,7 +1,7 @@
 version: "3.8"
 services:
     rpi-busybox-httpd:
-        restart: unless-stopped
+        restart: alway
         image: hypriot/rpi-busybox-httpd
         container_name: rpi-busybox-httpd
         ports:
@@ -9,6 +9,7 @@ services:
 
     portainer:
         image: portainer/portainer-ce
+        container_name: portainer
         command: -H unix:///var/run/docker.sock
         restart: always
         ports:
@@ -20,6 +21,8 @@ services:
 
     node-red:
         image: nodered/node-red:latest
+        container_name: node-red
+        restart: alway
         environment:
             - TZ=Asia/Bangkok
         ports:
