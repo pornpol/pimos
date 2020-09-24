@@ -18,26 +18,40 @@ services:
         ports:
             - 3000:80
 
-    nginx:
-        image: nginx:latest
+    portainer:
+        image: portainer/portainer
+        command: -H unix:///var/run/docker.sock
         restart: always
-        container_name: nginx
-        volumes:
-            - ./nginx/public:/var/www/html
-            - ./nginx/conf.d:/etc/nginx/conf.d
-            - ./nginx/certbot/conf:/etc/nginx/ssl
-            - ./nginx/certbot/data:/var/www/certbot
         ports:
-            - 80:80
-            - 443:443
-
-    certbot:
-        image: certbot/certbot:arm32v6-latest
-        container_name: certbot
-        depends_on:
-            - "nginx"
-        command: certonly --webroot --webroot-path=/var/www/certbot --email pornpol.w@gmail.com --agree-tos --no-eff-email -d pornpol.dev -d www.pornpol.dev
+            - 9000:9000
+            - 8000:8000
         volumes:
-            - ./nginx/certbot/conf:/etc/letsencrypt
-            - ./nginx/certbot/logs:/var/log/letsencrypt
-            - ./nginx/certbot/data:/var/www/certbot
+            - /var/run/docker.sock:/var/run/docker.sock
+            - portainer_data:/data
+
+volumes:
+    portainer_data:
+
+    # nginx:
+    #     image: nginx:latest
+    #     restart: always
+    #     container_name: nginx
+    #     volumes:
+    #         - ./nginx/public:/var/www/html
+    #         - ./nginx/conf.d:/etc/nginx/conf.d
+    #         - ./nginx/certbot/conf:/etc/nginx/ssl
+    #         - ./nginx/certbot/data:/var/www/certbot
+    #     ports:
+    #         - 80:80
+    #         - 443:443
+
+    # certbot:
+    #     image: certbot/certbot:arm32v6-latest
+    #     container_name: certbot
+    #     depends_on:
+    #         - "nginx"
+    #     command: certonly --webroot --webroot-path=/var/www/certbot --email pornpol.w@gmail.com --agree-tos --no-eff-email -d pornpol.dev -d www.pornpol.dev
+    #     volumes:
+    #         - ./nginx/certbot/conf:/etc/letsencrypt
+    #         - ./nginx/certbot/logs:/var/log/letsencrypt
+    #         - ./nginx/certbot/data:/var/www/certbot
