@@ -5,7 +5,7 @@ services:
         image: hypriot/rpi-busybox-httpd
         container_name: rpi-busybox-httpd
         ports:
-            - 3000:80
+            - 80:80
 
     portainer:
         image: portainer/portainer
