@@ -1,16 +1,5 @@
 version: "3.8"
 services:
-    ddclient:
-        restart: unless-stopped
-        image: linuxserver/ddclient
-        container_name: ddclient
-        environment:
-            - PUID=1000
-            - PGID=1000
-            - TZ=Asia/Bangkok
-        volumes:
-            - ./ddclient/config:/config
-
     rpi-busybox-httpd:
         restart: unless-stopped
         image: hypriot/rpi-busybox-httpd
@@ -29,8 +18,29 @@ services:
             - /var/run/docker.sock:/var/run/docker.sock
             - portainer_data:/data
 
+    node-red:
+        image: nodered/node-red:latest
+        environment:
+            - TZ=Asia/Bangkok
+        ports:
+            - "1880:1880"
+        volumes:
+            - node-red-data
+
 volumes:
     portainer_data:
+    node-red-data:
+
+    # ddclient:
+    #     restart: unless-stopped
+    #     image: linuxserver/ddclient
+    #     container_name: ddclient
+    #     environment:
+    #         - PUID=1000
+    #         - PGID=1000
+    #         - TZ=Asia/Bangkok
+    #     volumes:
+    #         - ./ddclient/config:/config
 
     # nginx:
     #     image: nginx:latest
